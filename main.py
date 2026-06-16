@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 import requests
@@ -11,7 +11,7 @@ URL = "https://stoneworks.gg/bans/bans.php"
 
 @app.get("/bans")
 @limiter.limit("3/second")
-def get_bans():
+def get_bans(request: Request):
     r = requests.get(URL, headers={
         "User-Agent": "Mozilla/5.0"
     }, timeout=15)
@@ -32,11 +32,11 @@ def get_bans():
     }
 
 @app.get("/test")
-def test():
+def test(request: Request):
     return {"message": "Hello, World!"}
 
 @app.get("/debug_redirect")
-def debug_redirect():
+def debug_redirect(request: Request):
     r = requests.get(
         "https://stoneworks.gg/bans/bans.php",
         headers={"User-Agent": "Mozilla/5.0"},
