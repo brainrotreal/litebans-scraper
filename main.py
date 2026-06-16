@@ -31,6 +31,10 @@ def get_bans():
         "rows": rows[:100]
     }
 
+@app.get("/test")
+def test():
+    return {"message": "Hello, World!"}
+
 @app.get("/debug_redirect")
 def debug_redirect():
     r = requests.get(
